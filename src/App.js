@@ -11,6 +11,26 @@ function App() {
   const [data, setData] = useState()
   const [userDates, setUserDates] = useState()
 
+  const URL = process.env.REACT_APP_API_ENDPOINT
+  // Fetch Data
+  useEffect(() => {
+
+    const getNamesData = () => {
+    axios.get(URL).then(response => {
+      setData(`reponse: ${response.data}`);
+      // convert stored days array into hash set 0(1), use object.has to avoid looping.
+      setUserDates(new Set(response.data.user.daysInOffice))
+    })
+    .catch(error => {
+      console.log(error);
+      setData(dummyData)
+      setUserDates(new Set(dummyData.user.daysInOffice) )
+    })
+  };
+  getNamesData();
+
+  }, [URL]);
+
 
   const name = ({ date, view }) => {
   
@@ -27,6 +47,8 @@ function App() {
         <Calendar 
           onChange={setDate} 
           value={date} 
+          tileClassName = {name}
+          tileDisabled={({ date }) => date.getDay() === 0 || date.getDay() === 6 }
         />
       
       </div>
