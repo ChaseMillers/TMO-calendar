@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
-import './defaultCalendar.css';
 import moment from 'moment';
-import './AddedCalendar.css'
 import dummyData from './dummyData.json'
 import axios from 'axios';
+
+import './defaultCalendar.css';
+import './AddedCalendar.css'
+import './attachment-gui.css'
+
 
 function App() {
   const [date, setDate] = useState(new Date());
   const [data, setData] = useState()
   const [userDates, setUserDates] = useState()
+  const [fetchData, triggerFetch] = useState(false)
 
   const URL = process.env.REACT_APP_API_ENDPOINT
   // Fetch Data
@@ -32,10 +36,34 @@ function App() {
   }, [URL]);
 
 
-  const name = ({ date, view }) => {
-  
+  const handleClass = ({ date, view }) => {
     if(userDates && userDates.has(moment(date).format("MM/DD/YYYY"))){
      return 'selectedInOffice'
+    }
+  }
+  const handleAdd = async () =>{
+    const datesData = []
+
+    try{
+      axios.post(URL, datesData).then(response => triggerFetch(!fetchData))
+      .catch(error => {
+        console.log(error);
+      });
+    } catch (error){
+      console.log(error)
+    }
+
+  }
+  const handleRemove = async () =>{
+    const datesData = []
+
+    try{
+      axios.post(URL, datesData).then(response => triggerFetch(!fetchData))
+      .catch(error => {
+        console.log(error);
+      });
+    } catch (error){
+      console.log(error)
     }
   }
 
@@ -47,9 +75,14 @@ function App() {
         <Calendar 
           onChange={setDate} 
           value={date} 
-          tileClassName = {name}
+          tileClassName = {handleClass}
           tileDisabled={({ date }) => date.getDay() === 0 || date.getDay() === 6 }
         />
+        <div className='buttons-gui'>
+          <h2>Office Days</h2>
+          <button className='add-btn' onClick={()=> handleAdd()}>Add</button>
+          <button className='remove-btn' onClick={()=> handleAdd()}>Remove</button>
+        </div>
       
       </div>
       <p className='text-center'>

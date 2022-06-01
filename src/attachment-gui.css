@@ -1,0 +1,32 @@
+.calendar-container{
+display: flex;
+background-color: rgb(234, 234, 234);
+max-width: fit-content;
+border-radius: 15px;
+box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+border-radius: 8px;
+border: solid 1px rgb(174, 174, 174);
+}
+
+.buttons-gui{
+    max-width: 100px;
+    padding-left: 20px;
+}
+
+button.add-btn {
+    border: 1px solid grey;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    background-color: rgb(231, 82, 171);
+    font-size: 18px;
+}
+
+button.remove-btn {
+    border: 1px solid grey;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    background-color: rgb(227, 30, 30);
+    font-size: 18px;
+}
