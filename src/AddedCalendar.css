@@ -1,0 +1,92 @@
+body{
+    box-sizing: border-box !important;
+}
+
+.react-calendar { 
+    width: 400px;
+    max-width: 100%;
+    background-color: #fff;
+    color: #222;
+    border-radius: 8px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.125em;
+   }
+   .react-calendar__navigation button {
+    color: #000000;
+    min-width: 44px;
+    background: none;
+    font-size: 23px;
+    margin-top: 8px;
+    font-weight: 600;
+   }
+   
+   /* Current date tile */
+   .react-calendar__tile--now {
+    background: white;
+    font-weight: bold;
+    font-size: 22px;
+    text-decoration: underline;
+    font-style: italic;
+    }
+
+    .react-calendar__tile--active {
+        background: white !important;
+        color: black;
+        outline: 2px solid #006edc !important;
+        z-index: 1;
+    }
+
+    .react-calendar__tile--now:enabled:hover, .react-calendar__tile--now:enabled:focus {
+        color: black !important;
+        z-index: 2;
+    }
+
+    .selectedInOffice {
+        background-color: rgb(231, 82, 171) !important;
+        color: white;
+    }
+    .selectedInOffice:hover, .selectedInOffice:focus, .selectedInOffice:active {
+        background: rgba(231, 82, 171, 0.63) !important;
+        color: black !important;
+    }
+
+    /* All tile numbers */
+    abbr {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    /* Goes to days of the week */
+    abbr[title] {
+        color: grey;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: underline solid white;
+    }
+
+    /* disabled year arrows */
+    button.react-calendar__navigation__arrow.react-calendar__navigation__next2-button, button.react-calendar__navigation__arrow.react-calendar__navigation__prev2-button {
+        display: none;
+    }
+
+    /* month select arrows */
+    button.react-calendar__navigation__arrow.react-calendar__navigation__next-button, button.react-calendar__navigation__arrow.react-calendar__navigation__prev-button {
+        color: #000000;
+        min-width: 44px;
+        background: none;
+        font-size: 23px;
+        margin-top: 8px;
+        font-weight: 600;
+        margin: 20px 20px 0 20px;
+        padding-bottom: 30px;
+    }
+
+    button.react-calendar__navigation__label{
+        margin-top: 23px;
+    }
+
+    /* weekend days */
+    .react-calendar__month-view__days__day--weekend {
+        color: rgb(201, 201, 201);
+    }

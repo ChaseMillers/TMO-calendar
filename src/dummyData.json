@@ -1,0 +1,11 @@
+{
+  "user" :{
+      "id": "cmiller200", 
+      "name": "Chase Miller",
+      "daysInOffice": ["06/29/2022", "06/02/2022", "06/09/2022"]
+  },
+  "teamMembers" :[
+      {"day": "05/31/2022", "members": [ "cmiller200", "niklman" ]},
+      {"day": "06/05/2022", "members": [ "Boby", "Chase" ]}
+  ]
+}
