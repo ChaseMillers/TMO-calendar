@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+/* eslint-disable */
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import './defaultCalendar.css';
@@ -6,17 +7,17 @@ import moment from 'moment';
 import './AddedCalendar.css'
 import dummyData from './dummyData.json'
 import axios from 'axios';
-import { LoginCallback, Security, withOktaAuth } from '@okta/okta-react/bundles/types';
+import { LoginCallback, Security, withOktaAuth } from '@okta/okta-react';
 import { OktaAuth } from '@okta/okta-auth-js';
 
 const oktaAuth = new OktaAuth({
-  issuer: 'https://t-mobile.oktapreview.com/oauth2/default',
-  clientId: '',
+  issuer: process.env.REACT_APP_OKTA_ISSUER,
+  clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
   redirectUri: '/login/callback',
   scopes: ['openid', 'profile']
 });
 
-const MainScreen = withOktaAuth(({ oktaAuth }) => {
+const MainScreen = withOktaAuth(({ oktaAuth, authState }) => {
   const [date, setDate] = useState(new Date());
   const [data, setData] = useState()
   const [userDates, setUserDates] = useState()
@@ -37,7 +38,7 @@ const MainScreen = withOktaAuth(({ oktaAuth }) => {
   }
 
   let buttons = null;
-  if (this.props.authState?.isAuthenticated) {
+  if (authState?.isAuthenticated) {
     buttons = (
     <div className="Buttons">
       <button onClick={logout}>Logout</button>
@@ -73,10 +74,13 @@ const MainScreen = withOktaAuth(({ oktaAuth }) => {
 });
 
 function App() {
- 
+  const restoreOriginalUri = async (_oktaAuth, originalUri) => {
+    props.history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
+  };
+
   return (
     <div className='app'>
-      <Security oktaAuth={oktaAuth} restoreOriginalUri={this.restoreOriginalUri}>
+      <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
             <Route path="/" exact={true} component={MainScreen}/>
             <Route path="/login/callback" component={LoginCallback}/>
       </Security>
