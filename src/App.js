@@ -8,7 +8,8 @@ import './AddedCalendar.css'
 import dummyData from './dummyData.json'
 import axios from 'axios';
 import { LoginCallback, Security, withOktaAuth } from '@okta/okta-react';
-import { OktaAuth } from '@okta/okta-auth-js';
+import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
+import Profile from './Profile'
 
 const oktaAuth = new OktaAuth({
   issuer: process.env.REACT_APP_OKTA_ISSUER,
@@ -57,6 +58,7 @@ const MainScreen = withOktaAuth(({ oktaAuth, authState }) => {
   return (
     <div className='mainScreen'>
       {buttons}
+      <Profile></Profile>
       <h1 className='text-center'>In Office Planner</h1>
       <div className='calendar-container'>
         <Calendar 
@@ -73,9 +75,9 @@ const MainScreen = withOktaAuth(({ oktaAuth, authState }) => {
   );
 });
 
-function App() {
+function App({ history }) {
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
-    props.history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
+    history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
   };
 
   return (
