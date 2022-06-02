@@ -5,12 +5,19 @@ import moment from 'moment';
 import './AddedCalendar.css'
 import dummyData from './dummyData.json'
 import axios from 'axios';
+import { OktaAuth } from '@okta/okta-auth-js';
 
 function App() {
   const [date, setDate] = useState(new Date());
   const [data, setData] = useState()
   const [userDates, setUserDates] = useState()
 
+  const oktaAuth = new OktaAuth({
+    issuer: '',
+    clientId: '',
+    redirectUri: ''
+  });
+  
 
   const name = ({ date, view }) => {
   
