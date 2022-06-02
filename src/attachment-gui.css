@@ -9,7 +9,7 @@ border: solid 1px rgb(174, 174, 174);
 }
 
 .buttons-gui{
-    max-width: 100px;
+    max-width: 120px;
     padding-left: 20px;
 }
 
@@ -20,6 +20,7 @@ button.add-btn {
     cursor: pointer;
     background-color: rgb(231, 82, 171);
     font-size: 18px;
+    margin-bottom: 8px;
 }
 
 button.remove-btn {
@@ -29,4 +30,8 @@ button.remove-btn {
     cursor: pointer;
     background-color: rgb(227, 30, 30);
     font-size: 18px;
+}
+
+.office-days-text{
+    /* font-size: 18px; */
 }

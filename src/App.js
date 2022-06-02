@@ -10,8 +10,10 @@ import './attachment-gui.css'
 
 
 function App() {
+  const [data, setData] = useState();
+
   const [date, setDate] = useState(new Date());
-  const [data, setData] = useState()
+  const [selectedDates, setSelectedDates] = useState(new Set())
   const [userDates, setUserDates] = useState()
   const [fetchData, triggerFetch] = useState(false)
 
@@ -27,20 +29,35 @@ function App() {
     })
     .catch(error => {
       console.log(error);
-      setData(dummyData)
-      setUserDates(new Set(dummyData.user.daysInOffice) )
     })
   };
-  getNamesData();
+  // getNamesData();
+
+  setData(dummyData)
+  setUserDates(new Set(dummyData.user.daysInOffice) )
 
   }, [URL]);
 
-
+  
   const handleClass = ({ date, view }) => {
-    if(userDates && userDates.has(moment(date).format("MM/DD/YYYY"))){
-     return 'selectedInOffice'
+    // console.log(userDates, selectedDates)
+   
+    if(selectedDates 
+      && selectedDates.has(moment(date).format("MM/DD/YYYY")) 
+      && userDates 
+      && userDates.has(moment(date).format("MM/DD/YYYY"))){
+      return 'react-calendar__tile-special selectedInOffice'
+     }
+
+    if(selectedDates && selectedDates.has(moment(date).format("MM/DD/YYYY"))){
+      return 'react-calendar__tile-special'
+     }
+   
+    else if (userDates && userDates.has(moment(date).format("MM/DD/YYYY"))){
+      return 'selectedInOffice'
     }
   }
+
   const handleAdd = async () =>{
     const datesData = []
 
@@ -67,26 +84,41 @@ function App() {
     }
   }
 
+  const handleSelect =(e)=>{
+    setDate(new Date(e))
+
+    // moment(date).format("MM/DD/YYYY"))
+    const hashMapSet = moment(new Date(e)).format("MM/DD/YYYY")
+    
+    if(selectedDates.has(hashMapSet) === false){
+      selectedDates.add(hashMapSet) 
+    }
+    else{
+      selectedDates.delete(hashMapSet)
+    }
+    
+  }
+
   return (
     <div className='app'>
       <h1 className='text-center'>In Office Planner</h1>
       <div className='calendar-container'>
 
         <Calendar 
-          onChange={setDate} 
+          onChange={handleSelect} 
           value={date} 
           tileClassName = {handleClass}
           tileDisabled={({ date }) => date.getDay() === 0 || date.getDay() === 6 }
         />
         <div className='buttons-gui'>
-          <h2>Office Days</h2>
+          <h2 className='office-days-text'>Office Days</h2>
           <button className='add-btn' onClick={()=> handleAdd()}>Add</button>
           <button className='remove-btn' onClick={()=> handleAdd()}>Remove</button>
         </div>
       
       </div>
       <p className='text-center'>
-        <span className='bold'>Selected Date:</span>{' '}
+        <span className='bold'>Selected Date: </span>
         {date.toDateString()}
       </p>
     </div>

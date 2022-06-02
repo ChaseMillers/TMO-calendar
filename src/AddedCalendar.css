@@ -1,4 +1,4 @@
-body{
+*{
     box-sizing: border-box !important;
 }
 
@@ -20,11 +20,11 @@ body{
     font-style: italic;
     }
 
-    .react-calendar__tile--active {
-        background: white !important;
-        color: black;
+    .react-calendar__tile-special {
+      
         outline: 2px solid #006edc !important;
-        z-index: 1;
+        outline-offset: -2px;
+       
     }
 
     .react-calendar__tile--now:enabled:hover, .react-calendar__tile--now:enabled:focus {
@@ -33,10 +33,10 @@ body{
     }
 
     .selectedInOffice {
-        background-color: rgb(231, 82, 171) !important;
+        background-color: rgb(231, 82, 171) ;
         color: white;
     }
-    .selectedInOffice:hover, .selectedInOffice:focus, .selectedInOffice:active {
+    .selectedInOffice:hover, .selectedInOffice:active {
         background: rgba(231, 82, 171, 0.63) !important;
         color: black !important;
     }
