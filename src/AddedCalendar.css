@@ -1,17 +1,7 @@
-body{
+*{
     box-sizing: border-box !important;
 }
 
-.react-calendar { 
-    width: 400px;
-    max-width: 100%;
-    background-color: #fff;
-    color: #222;
-    border-radius: 8px;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.125em;
-   }
    .react-calendar__navigation button {
     color: #000000;
     min-width: 44px;
@@ -30,11 +20,11 @@ body{
     font-style: italic;
     }
 
-    .react-calendar__tile--active {
-        background: white !important;
-        color: black;
+    .react-calendar__tile-special {
+      
         outline: 2px solid #006edc !important;
-        z-index: 1;
+        outline-offset: -2px;
+       
     }
 
     .react-calendar__tile--now:enabled:hover, .react-calendar__tile--now:enabled:focus {
@@ -43,10 +33,10 @@ body{
     }
 
     .selectedInOffice {
-        background-color: rgb(231, 82, 171) !important;
+        background-color: rgb(231, 82, 171) ;
         color: white;
     }
-    .selectedInOffice:hover, .selectedInOffice:focus, .selectedInOffice:active {
+    .selectedInOffice:hover, .selectedInOffice:active {
         background: rgba(231, 82, 171, 0.63) !important;
         color: black !important;
     }
