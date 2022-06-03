@@ -25,6 +25,7 @@ export default function Profile() {
             </div>
         )
     }
+    console.log(authState.accessToken.accessToken);
     return (
         <div>
             <p>Logged in as {userInfo['name']} with email {userInfo['preferred_username']}</p>
