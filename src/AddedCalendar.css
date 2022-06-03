@@ -2,81 +2,93 @@
     box-sizing: border-box !important;
 }
 
-   .react-calendar__navigation button {
+.app {
+    align-items: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1.text-center {
+    text-align: center;
+    color: white;
+    background-color: magenta;
+    border-radius: 5px;
+}
+
+.react-calendar__navigation button {
     color: #000000;
     min-width: 44px;
     background: none;
     font-size: 23px;
     margin-top: 8px;
     font-weight: 600;
-   }
-   
-   /* Current date tile */
-   .react-calendar__tile--now {
-    background: white;
-    font-weight: bold;
-    font-size: 22px;
+}
+
+/* Current date tile */
+.react-calendar__tile--now abbr{
     text-decoration: underline;
     font-style: italic;
-    }
+}
 
-    .react-calendar__tile-special {
-      
-        outline: 2px solid #006edc !important;
-        outline-offset: -2px;
-       
-    }
+.react-calendar__tile-special {
+    outline: 2px solid #006edc !important;
+    outline-offset: -2px;
+}
 
-    .react-calendar__tile--now:enabled:hover, .react-calendar__tile--now:enabled:focus {
-        color: black !important;
-        z-index: 2;
-    }
+.react-calendar__tile--now:enabled:hover, .react-calendar__tile--now:enabled:focus {
+    color: black !important;
+    z-index: 2;
+}
 
-    .selectedInOffice {
-        background-color: rgb(231, 82, 171) ;
-        color: white;
-    }
-    .selectedInOffice:hover, .selectedInOffice:active {
-        background: rgba(231, 82, 171, 0.63) !important;
-        color: black !important;
-    }
+.selectedInOffice {
+    background-color: rgb(231, 82, 171) ;
+    color: white;
+}
+.selectedInOffice:hover, .selectedInOffice:active {
+    background: rgba(231, 82, 171, 0.63) !important;
+    color: black !important;
+}
 
-    /* All tile numbers */
-    abbr {
-        font-size: 18px;
-        font-weight: 600;
-    }
+/* All tile numbers */
+abbr {
+    font-size: 18px;
+    font-weight: 600;
+}
 
-    /* Goes to days of the week */
-    abbr[title] {
-        color: grey;
-        font-size: 16px;
-        font-weight: 600;
-        text-decoration: underline solid white;
-    }
+/* Goes to days of the week */
+abbr[title] {
+    color: grey;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: underline solid white;
+}
 
-    /* disabled year arrows */
-    button.react-calendar__navigation__arrow.react-calendar__navigation__next2-button, button.react-calendar__navigation__arrow.react-calendar__navigation__prev2-button {
-        display: none;
-    }
+/* disabled year arrows */
+button.react-calendar__navigation__arrow.react-calendar__navigation__next2-button, 
+button.react-calendar__navigation__arrow.react-calendar__navigation__prev2-button {
+    display: none;
+}
 
-    /* month select arrows */
-    button.react-calendar__navigation__arrow.react-calendar__navigation__next-button, button.react-calendar__navigation__arrow.react-calendar__navigation__prev-button {
-        color: #000000;
-        min-width: 44px;
-        background: none;
-        font-size: 23px;
-        margin-top: 8px;
-        font-weight: 600;
-        margin: 20px 20px 0 20px;
-        padding-bottom: 30px;
-    }
+/* month select arrows */
+button.react-calendar__navigation__arrow.react-calendar__navigation__next-button, 
+button.react-calendar__navigation__arrow.react-calendar__navigation__prev-button {
+    color: #000000;
+    min-width: 44px;
+    background: none;
+    font-size: 23px;
+    margin-top: 8px;
+    font-weight: 600;
+    margin: 20px 20px 0 20px;
+    padding-bottom: 30px;
+}
 
-    button.react-calendar__navigation__label{
-        margin-top: 23px;
-    }
+button.react-calendar__navigation__label{
+    margin-top: 23px;
+}
 
-    /* weekend days */
-    .react-calendar__month-view__days__day--weekend {
-        color: rgb(201, 201, 201);
-    }
+/* weekend days */
+.react-calendar__month-view__days__day--weekend {
+    color: rgb(201, 201, 201);
+}
+

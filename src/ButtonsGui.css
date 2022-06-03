@@ -1,16 +1,16 @@
-.calendar-container{
-display: flex;
-background-color: rgb(234, 234, 234);
-max-width: fit-content;
-border-radius: 15px;
-box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-border-radius: 8px;
-border: solid 1px rgb(174, 174, 174);
+.joined-calendar{
+    display: flex;
+    background-color: rgb(234, 234, 234);
+    border-radius: 15px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    outline: solid 1px rgb(174, 174, 174);
 }
 
 .buttons-gui{
     max-width: 120px;
     padding-left: 20px;
+    background: #d7d7d7;
 }
 
 button.add-btn {
@@ -30,8 +30,4 @@ button.remove-btn {
     cursor: pointer;
     background-color: rgb(227, 30, 30);
     font-size: 18px;
-}
-
-.office-days-text{
-    /* font-size: 18px; */
 }
