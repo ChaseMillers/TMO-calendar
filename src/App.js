@@ -1,17 +1,29 @@
-import { useState, useEffect } from 'react';
+/* eslint-disable */
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import moment from 'moment';
 import dummyData from './dummyData.json'
 import axios from 'axios';
+import { LoginCallback, Security, withOktaAuth } from '@okta/okta-react';
+import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
+import Profile from './Profile'
 
 import './defaultCalendar.css';
 import './AddedCalendar.css'
 import './attachment-gui.css'
 
+const oktaAuth = new OktaAuth({
+  issuer: process.env.REACT_APP_OKTA_ISSUER,
+  clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
+  redirectUri: '/login/callback',
+  scopes: ['openid', 'profile']
+});
 
-function App() {
+
+const MainScreen = withOktaAuth(({ oktaAuth, authState }) => {
+
   const [data, setData] = useState();
-
   const [date, setDate] = useState(new Date());
   const [selectedDates, setSelectedDates] = useState(new Set())
   const [userDates, setUserDates] = useState()
@@ -99,11 +111,37 @@ function App() {
     
   }
 
+  async function login() {
+    await oktaAuth.signInWithRedirect();
+  }
+
+  async function logout() {
+    await oktaAuth.signOut();
+  }
+
+  let buttons = null;
+  if (authState?.isAuthenticated) {
+    buttons = (
+    <div className="Buttons">
+      <button onClick={logout}>Logout</button>
+      {/* Replace me with your root component. */}
+    </div>
+    );
+  } 
+  else {
+    buttons = (
+      <div className="Buttons">
+        <button onClick={login}>Login</button>
+      </div>
+    );
+  }
+  
   return (
-    <div className='app'>
+    <div className='mainScreen'>
+      {buttons}
+      <Profile></Profile>
       <h1 className='text-center'>In Office Planner</h1>
       <div className='calendar-container'>
-
         <Calendar 
           onChange={handleSelect} 
           value={date} 
@@ -123,6 +161,28 @@ function App() {
       </p>
     </div>
   );
+});
+
+function App({ history }) {
+  const restoreOriginalUri = async (_oktaAuth, originalUri) => {
+    history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
+  };
+
+  return (
+    <div className='app'>
+      <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
+            <Route path="/" exact={true} component={MainScreen}/>
+            <Route path="/login/callback" component={LoginCallback}/>
+      </Security>
+    </div> 
+  );
 }
 
-export default App;
+const AppWithRouterAccess = withRouter(App);
+
+function RouterApp() {
+  return (
+    <Router><AppWithRouterAccess/></Router>
+  );
+}
+export default RouterApp;
