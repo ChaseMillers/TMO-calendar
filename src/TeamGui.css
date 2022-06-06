@@ -1,0 +1,78 @@
+/* li {
+    width: 34%;
+    float: left;
+    margin-bottom: -1px;
+} */
+
+.in-office-container li {
+    color: rgb(77, 77, 77);
+    font-size: 16px;
+    width: 50%;
+    float: left;
+    margin-bottom: -1px;
+}
+
+.in-office-container {
+    text-align: left;
+}
+
+/* Date header */
+.in-office-container h3 {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+/* in Office header */
+.in-office-container h4 {
+    margin-top: 0;
+    font-size: 18px;
+    font-weight: 400;
+    color: rgb(77, 77, 77);
+}
+
+.team-selected {
+    background-color: greenyellow;
+    border-radius: 50px;
+    width: 16px;
+    position: absolute;
+    margin-left: 29px;
+    margin-top: -9px;
+}
+
+button.react-calendar__tile.react-calendar__month-view__days__day {
+    border: 0.5px solid #f7f7f7;
+}
+
+.absolute-container{
+    position: absolute;
+}
+
+.hover-content{
+    position:absolute;
+    top: 0;
+    left:0;
+    display: none;
+    margin-top: 380px;
+}
+
+button.react-calendar__tile.react-calendar__month-view__days__day:hover .hover-content{
+    display: inline-block;
+}
+
+/* grid-container = .in-office-list */
+
+.in-office-list {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 10px;
+    padding: 10px;
+  }
+  
+  .in-office-list > div {
+    background-color: greenyellow;
+    color: rgb(0, 0, 0);
+    text-align: left;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 5px 5px;
+  }
+  
