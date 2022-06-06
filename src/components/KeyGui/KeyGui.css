@@ -1,0 +1,21 @@
+.key-container {
+    margin-top: 54%;
+}
+
+.key-container h3 {
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 3px;
+}
+
+.team-circle{
+    background-color: greenyellow;
+    text-align: center;
+}
+
+.in-office-square{
+    background-color: rgb(231, 82, 171);
+    height: 20px;
+    text-align: center;
+}
+
