@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import KeyGui from '../KeyGui/KeyGui'
 import './SidePanelGui.css'
 
 const SidePanelGui = ({URL, selectedDates, savedUserDates, setSavedUserDates, savedTeamData, setSavedTeamData, triggerFetch, fetchData }) => {
@@ -31,6 +32,8 @@ const SidePanelGui = ({URL, selectedDates, savedUserDates, setSavedUserDates, sa
             <h2 className='office-days-text'>Office Days</h2>
             <button className='add-btn' onClick={()=> handleAdd()}>Add</button>
             <button className='remove-btn' onClick={()=> handleRemove()}>Remove</button>
+
+            <KeyGui />
         </div>
     )
 }
