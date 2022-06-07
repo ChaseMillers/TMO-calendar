@@ -6,7 +6,7 @@ const TeamMembersListGui = ({ date, savedTeamData }) => (
 
     savedTeamData
     && savedTeamData.map((data, i) => (
-      data.day.includes(moment(date).format("MM/DD/YYYY"))
+      data.day.includes(moment(date).format("YYYY/MM/DD"))
       ? 
       <React.Fragment key={i}>
         <div className='hover-content'>

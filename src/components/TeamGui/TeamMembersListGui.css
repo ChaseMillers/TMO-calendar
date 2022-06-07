@@ -36,6 +36,7 @@
     position: absolute;
     margin-left: 29px;
     margin-top: -9px;
+    color: black;
 }
 
 button.react-calendar__tile.react-calendar__month-view__days__day {
