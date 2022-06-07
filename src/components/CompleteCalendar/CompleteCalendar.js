@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Calendar from 'react-calendar';
 import SidePanelGui from '../SidePannelGui/SidePanelGui';
 import TeamMembersListGui from '../TeamGui/TeamMembersListGui';
@@ -14,8 +14,6 @@ const CompleteCalendar = ({
     setSavedUserDates,
     savedUserDates,
     setSavedTeamData,
-    triggerFetch,
-    fetchData,
     setDate,
     startDate,
     setMonthCount,
@@ -43,10 +41,9 @@ const CompleteCalendar = ({
         );
     };
 
-      const handleSelect =(e)=>{
+    const handleSelect =(e)=>{
         setDate(new Date(e))
-        setMonthCount(monthCount + 1)
-        console.log(monthCount)
+       
         const fixedDate = moment(new Date(e)).format("YYYY/MM/DD")
         
         if(selectedDates.has(fixedDate) === false){
@@ -57,25 +54,33 @@ const CompleteCalendar = ({
         };
       };
 
+
+
     const PreviousIcon =()=>{
+        const handlePrevMonth =()=>{
+            const newCount = monthCount - 1
+            const setNewDate = new Date(new Date().setMonth(new Date().getMonth() + newCount))
+            
+            setMonthCount( newCount )
+            setCurrentCalanderDate( setNewDate ) 
+        }
 
         return(
-            <div onClick={()=> console.log('prev')}> ‹ </div>
+            <div onClick={()=> handlePrevMonth()}> ‹ </div>
         )
     }
     const NextIcon =()=>{
 
-        const hadnleNextMonth =()=>{
+        const handleNextMonth =()=>{
             const newCount = monthCount + 1
             const setNewDate = new Date(new Date().setMonth(new Date().getMonth() + newCount))
             
             setMonthCount( newCount )
             setCurrentCalanderDate( setNewDate ) 
-            triggerFetch(!fetchData)
         }
       
         return(
-            <div onClick={()=> hadnleNextMonth()}> › </div>
+            <div onClick={()=> handleNextMonth()}> › </div>
         )
     }
 
@@ -100,8 +105,6 @@ const CompleteCalendar = ({
                 setSavedUserDates={setSavedUserDates} 
                 savedTeamData={savedTeamData} 
                 setSavedTeamData={setSavedTeamData} 
-                triggerFetch={triggerFetch} 
-                fetchData={fetchData} 
             />
         </div>
     )
