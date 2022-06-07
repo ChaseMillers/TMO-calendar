@@ -18,6 +18,8 @@ function App({startDate}) {
   const URL = process.env.REACT_APP_API_ENDPOINT
   // Fetch Data
   useEffect(() => {
+    console.log(new Date('2022-01-03T05:00:00.000+00:00'))
+
     const getURL = URL+moment(currentCalanderDate).format("YYYY/MM/")
     console.log(getURL)
     const getNamesData = () => {
