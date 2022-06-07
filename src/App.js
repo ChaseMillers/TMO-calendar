@@ -3,8 +3,9 @@ import dummyData from './dummyData.json'
 import axios from 'axios';
 import CompleteCalendar from './components/CompleteCalendar/CompleteCalendar'
 import './App.css'
+import moment from 'moment';
 
-function App() {
+function App({startDate}) {
   const [data, setData] = useState();
 
   const [date, setDate] = useState(new Date());
@@ -12,11 +13,13 @@ function App() {
   const [savedUserDates, setSavedUserDates] = useState()
   const [savedTeamData, setSavedTeamData] = useState()
   const [fetchData, triggerFetch] = useState(false)
+  const [monthCount, setMonthCount] = useState(0)
+  const [currentCalanderDate, setCurrentCalanderDate] = useState()
 
   const URL = process.env.REACT_APP_API_ENDPOINT
   // Fetch Data
   useEffect(() => {
-
+    const getURL = URL+moment(currentCalanderDate).format("YYYY/MM/")
     const getNamesData = () => {
       axios.get(URL).then(response => {
         setData(response.data);
@@ -28,19 +31,19 @@ function App() {
         console.log(error);
       })
     };
-    // getNamesData();
 
     setData(dummyData)
     setSavedUserDates(new Set(dummyData.user.daysInOffice) )
     setSavedTeamData(dummyData.teamMembers) 
-  }, [URL]);
+  }, [URL, fetchData]);
 
 
   return (
     <div className='app'>
       <div className='absolute-container'>
         <h1 className='text-center'>In Office Planner</h1>
-          <CompleteCalendar 
+          <CompleteCalendar
+            startDate={startDate}
             setDate={setDate}
             date={date} 
             savedTeamData={savedTeamData}
@@ -50,6 +53,10 @@ function App() {
             setSavedTeamData={setSavedTeamData}
             triggerFetch={triggerFetch}
             fetchData={fetchData}
+            monthCount={monthCount}
+            setMonthCount={setMonthCount}
+            setCurrentCalanderDate={setCurrentCalanderDate}
+            currentCalanderDate={currentCalanderDate}
           />
       </div>
     </div>

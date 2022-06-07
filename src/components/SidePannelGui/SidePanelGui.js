@@ -5,21 +5,33 @@ import './SidePanelGui.css'
 
 const SidePanelGui = ({URL, selectedDates, savedUserDates, setSavedUserDates, savedTeamData, setSavedTeamData, triggerFetch, fetchData }) => {
 
-    const handleAdd = async () =>{
-        const datesData = {}
-    
-        try{
-          axios.post(URL, datesData).then(response => triggerFetch(!fetchData))
-          .catch(error => {
-            console.log(error);
-          });
-        } catch (error){
-          console.log(error)
-        }
-    
+  const alertMsg = () => {
+    if(!selectedDates.size) alert("Please select a day")
+  }
+
+  const handleAdd = async () =>{
+      const datesData = []
+      alertMsg()
+          
+      try{
+        axios.post(URL, datesData).then(response => triggerFetch(!fetchData))
+        .catch(error => {
+          console.log(error);
+        });
+      } catch (error){
+        console.log(error)
       }
-      const handleRemove = async () =>{
-        const datesData = []
+  
+    }
+
+    const handleRemove = async () =>{
+      const datesData = []
+      alertMsg()
+
+      selectedDates.forEach(date => {
+        if (savedUserDates.has(date)) datesData.push(date) 
+        console.log(datesData)
+      })
     
           axios.delete(URL, datesData).then(response => triggerFetch(!fetchData))
           .catch(error => {
