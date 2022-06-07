@@ -14,7 +14,7 @@ image:
 container:
   multiPorts:
     - name: admin
-      containerPort: 8080
+      containerPort: 80
       protocol: TCP
   healthcheck:
     path: /
@@ -46,7 +46,6 @@ ingress:
       portName: admin
 tls:
   enabled: true
-  secretName: ""
 autoscale:
   enabled: false
   minReplicas: 2
