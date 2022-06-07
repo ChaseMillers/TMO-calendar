@@ -12,7 +12,6 @@ function App({startDate}) {
   const [selectedDates, setSelectedDates] = useState(new Set())
   const [savedUserDates, setSavedUserDates] = useState()
   const [savedTeamData, setSavedTeamData] = useState()
-  const [fetchData, triggerFetch] = useState(false)
   const [monthCount, setMonthCount] = useState(0)
   const [currentCalanderDate, setCurrentCalanderDate] = useState()
 
@@ -20,6 +19,7 @@ function App({startDate}) {
   // Fetch Data
   useEffect(() => {
     const getURL = URL+moment(currentCalanderDate).format("YYYY/MM/")
+    console.log(getURL)
     const getNamesData = () => {
       axios.get(URL).then(response => {
         setData(response.data);
@@ -35,7 +35,7 @@ function App({startDate}) {
     setData(dummyData)
     setSavedUserDates(new Set(dummyData.user.daysInOffice) )
     setSavedTeamData(dummyData.teamMembers) 
-  }, [URL, fetchData]);
+  }, [URL, currentCalanderDate]);
 
 
   return (
@@ -51,8 +51,6 @@ function App({startDate}) {
             setSavedUserDates={setSavedUserDates}
             savedUserDates={savedUserDates}
             setSavedTeamData={setSavedTeamData}
-            triggerFetch={triggerFetch}
-            fetchData={fetchData}
             monthCount={monthCount}
             setMonthCount={setMonthCount}
             setCurrentCalanderDate={setCurrentCalanderDate}

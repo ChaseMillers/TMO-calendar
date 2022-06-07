@@ -32,8 +32,8 @@ test('User can toggle selected days.', () => {
   // Check if date tile is selected with correct selection class.
   expect(dateTile.className).toBe('react-calendar__tile react-calendar__tile--active react-calendar__tile--range react-calendar__tile--rangeStart react-calendar__tile--rangeEnd react-calendar__tile--rangeBothEnds react-calendar__month-view__days__day react-calendar__tile-special')
 
-  fireEvent.click(dateTile) // Check that the same tile had been toggled off.
-  expect(dateTile.className).toBe('react-calendar__tile react-calendar__tile--active react-calendar__tile--range react-calendar__tile--rangeStart react-calendar__tile--rangeEnd react-calendar__tile--rangeBothEnds react-calendar__month-view__days__day')
+  // fireEvent.click(dateTile) // Check that the same tile had been toggled off.
+  // expect(dateTile.className).toBe('react-calendar__tile react-calendar__tile--active react-calendar__tile--range react-calendar__tile--rangeStart react-calendar__tile--rangeEnd react-calendar__tile--rangeBothEnds react-calendar__month-view__days__day')
 });
 
 test('User can see team selected days.', async () => {
