@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Calendar from 'react-calendar';
 import SidePanelGui from '../SidePannelGui/SidePanelGui';
 import TeamMembersListGui from '../TeamGui/TeamMembersListGui';
@@ -14,31 +14,37 @@ const CompleteCalendar = ({
     setSavedUserDates,
     savedUserDates,
     setSavedTeamData,
-    triggerFetch,
-    fetchData,
-    setDate
+    setDate,
+    startDate,
+    setMonthCount,
+    monthCount,
+    currentCalanderDate,
+    setCurrentCalanderDate
 }) =>{
 
-    const handleClass = ({ date, view }) => (
-  
-        selectedDates && savedUserDates // If data is part of user selection and saved selection, add both needed classes.
-        && selectedDates.has(moment(date).format("MM/DD/YYYY")) 
-        && savedUserDates.has(moment(date).format("MM/DD/YYYY"))
+    const handleClass = ({ date, view }) => {
+        const fixedFormatCurrentDay = moment(date).format("YYYY/MM/DD")
         
-        ? 'react-calendar__tile-special selectedInOffice'
-        : selectedDates && selectedDates.has(moment(date).format("MM/DD/YYYY"))
-        
-        ? 'react-calendar__tile-special'
-        : savedUserDates && savedUserDates.has(moment(date).format("MM/DD/YYYY"))
-        
-        ? 'selectedInOffice'
-        : null
-      );
+        return(
+            selectedDates && savedUserDates // If data is part of user selection and saved selection, add both needed classes.
+            && selectedDates.has(fixedFormatCurrentDay) 
+            && savedUserDates.has(fixedFormatCurrentDay)
+            
+            ? 'react-calendar__tile-special selectedInOffice'
+            : selectedDates && selectedDates.has(fixedFormatCurrentDay)
+            
+            ? 'react-calendar__tile-special'
+            : savedUserDates && savedUserDates.has(fixedFormatCurrentDay)
+            
+            ? 'selectedInOffice'
+            : null
+        );
+    };
 
-      const handleSelect =(e)=>{
+    const handleSelect =(e)=>{
         setDate(new Date(e))
-    
-        const fixedDate = moment(new Date(e)).format("MM/DD/YYYY")
+       
+        const fixedDate = moment(new Date(e)).format("YYYY/MM/DD")
         
         if(selectedDates.has(fixedDate) === false){
           selectedDates.add(fixedDate) 
@@ -49,14 +55,49 @@ const CompleteCalendar = ({
       };
 
 
+
+    const PreviousIcon =()=>{
+        const handlePrevMonth =()=>{
+            const newCount = monthCount - 1
+            const setNewDate = new Date(new Date().setMonth(new Date().getMonth() + newCount))
+            
+            setMonthCount( newCount )
+            setCurrentCalanderDate( setNewDate ) 
+        }
+
+        return(
+            <div onClick={()=> handlePrevMonth()}> ‹ </div>
+        )
+    }
+    const NextIcon =()=>{
+
+        const handleNextMonth =()=>{
+            const newCount = monthCount + 1
+            const setNewDate = new Date(new Date().setMonth(new Date().getMonth() + newCount))
+            
+            setMonthCount( newCount )
+            setCurrentCalanderDate( setNewDate ) 
+        }
+      
+        return(
+            <div onClick={()=> handleNextMonth()}> › </div>
+        )
+    }
+
+
     return(
         <div className='joined-calendar'>
             <Calendar 
+                defaultActiveStartDate={startDate}
                 onChange={handleSelect} 
                 value={date} 
                 tileClassName = {handleClass}
                 tileContent = {({ date }) => <TeamMembersListGui date={date} savedTeamData={savedTeamData} />}
                 tileDisabled={({ date }) => date.getDay() === 0 || date.getDay() === 6 }
+                view={"month"}
+
+                nextLabel={<NextIcon />}
+                prevLabel={<PreviousIcon  />}
             />
             <SidePanelGui 
                 selectedDates={selectedDates} 
@@ -64,8 +105,6 @@ const CompleteCalendar = ({
                 setSavedUserDates={setSavedUserDates} 
                 savedTeamData={savedTeamData} 
                 setSavedTeamData={setSavedTeamData} 
-                triggerFetch={triggerFetch} 
-                fetchData={fetchData} 
             />
         </div>
     )

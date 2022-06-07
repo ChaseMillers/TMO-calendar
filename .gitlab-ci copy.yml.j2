@@ -1,0 +1,69 @@
+metadata:
+  namespace: wfo-dev-duck-dev-w2
+  releaseName: c39-capstone-fe
+  releaseVersion: 1.0.0
+  target: duck-dev-w2
+  iamRole: null
+replicaCount: 1
+nodeLabel: agent
+image:
+  repository: registry.gitlab.com/tmobile/conducktor/self-service/go-sample:1.0.0
+  pullPolicy: Always
+  pullSecrets:
+    - name: c39-chase-miller
+container:
+  multiPorts:
+    - name: admin
+      containerPort: 8080
+      protocol: TCP
+  healthcheck:
+    path: /
+    scheme: HTTP
+    portName: admin
+resources:
+  requests:
+    cpu: 0.1
+    memory: 16Mi
+  limits:
+    cpu: 0.2
+    memory: 256Mi
+variables: null
+volumeMaps: null
+persistentVolumeClaims: null
+secrets: null
+secretMaps: null
+configMaps: null
+envFrom:
+  configMaps: []
+  secrets: []
+ingress:
+  enabled: true
+  ingressType: HTTP
+  applicationType: internal
+  serviceEndpoint: c39-capstone-fe.duck-dev-w2.kube.t-mobile.com
+  multiPaths:
+    - path: /
+      portName: admin
+tls:
+  enabled: true
+  secretName: ""
+autoscale:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 5
+  cpuAverageUtilization: 50
+telemetry:
+  enabled: false
+  path: /prometheus
+  port: "8080"
+  scheme: HTTP
+global:
+  ttl: 1d
+  expiresAt: ""
+annotations:
+  deployment:
+    swaggerUri: ""
+openTelemetry:
+  enabled: false
+  exporterOtlpEndpoint: ""
+  resourceAttributes: ""
