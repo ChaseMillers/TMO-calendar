@@ -16,12 +16,13 @@ function App({startDate}) {
   const [currentCalanderDate, setCurrentCalanderDate] = useState()
 
   const URL = process.env.REACT_APP_API_ENDPOINT
+  const signedInUSerEmail = 'johnnybravo@t-mobile.com'
+
   // Fetch Data
   useEffect(() => {
-    console.log(new Date('2022-01-03T05:00:00.000+00:00'))
+    // console.log(new Date('2022-01-03T05:00:00.000+00:00'))
 
     const getURL = URL+moment(currentCalanderDate).format("YYYY/MM/")
-    console.log(getURL)
     const getNamesData = () => {
       axios.get(URL).then(response => {
         setData(response.data);

@@ -1,0 +1,37 @@
+include:
+  - project: 'tmobile/templates'
+    file: '/gitlab-ci/.tmo.global.common.gitlab-ci.yml'
+  - project: 'tmobile/templates'
+    file: '/gitlab-ci/.tmo.job.npm.gitlab-ci.yml'
+  - project: 'tmobile/templates'
+    file: '/gitlab-ci/.tmo.function.docker.gitlab-ci.yml'
+  - project: 'tmobile/templates'
+    file: '/gitlab-ci/.tmo.function.duck-deploy.gitlab-ci.yml'
+
+stages:
+  - tmo
+  - test
+  - build
+  - package
+  - deploy
+
+deploy-dev:
+  stage: deploy
+  secrets:
+    CONDUCKTOR_PASS:
+      vault: workforce-transformation/onboarding-bootcamps/service_principal_password@tmobile
+  variables:
+    CONDUCKTOR_CONFIG_PATH: ./dev_deploy.yml
+    GIT_DEPTH: 1
+    CONDUCKTOR_NS: wfo-dev-duck-dev-w2
+    CONDUCKTOR_TARGET: duck-dev-w2
+  extends: .duck_deploy
+  environment:
+    name: dev
+
+docker_package_with_harbor:
+  stage: package
+  extends: .docker-package
+  services:
+     - name: docker:dind
+       command: ["--insecure-registry=harbor.geo.pks.t-mobile.com"]
