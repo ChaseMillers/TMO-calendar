@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import dummyData from '../dummyData.json'
+import dummyData from '../NewdummyData.json'
 import CompleteCalendar from './CompleteCalendar/CompleteCalendar'
 import { withOktaAuth } from "@okta/okta-react";
 import '../App.css'
