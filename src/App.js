@@ -1,5 +1,5 @@
 import React from 'react';
-import { LoginCallback, Security, withOktaAuth } from "@okta/okta-react";
+import { LoginCallback, Security } from "@okta/okta-react";
 import './App.css'
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import { BrowserRouter, Route } from 'react-router-dom';
@@ -24,7 +24,7 @@ function App({ history }) {
       <Route path="/login/callback" component={LoginCallback}/>
     </Security>
   );
-}
+};
 
 const AppWithRouterAccess = withRouter(App);
 

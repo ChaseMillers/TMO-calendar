@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import dummyData from '../NewdummyData.json'
+import dummyData from '../DummyData.json'
 import CompleteCalendar from './CompleteCalendar/CompleteCalendar'
 import { withOktaAuth } from "@okta/okta-react";
 import '../App.css'
@@ -7,7 +7,7 @@ import '../App.css'
 
 export default withOktaAuth(({oktaAuth, authState, startDate}) => {
 
-  const {data, setData} = useState({})
+  const {data } = useState({})
   const [date, setDate] = useState(new Date());
   const [selectedDates] = useState(new Set())
   const [savedUserDates, setSavedUserDates] = useState()
@@ -15,9 +15,8 @@ export default withOktaAuth(({oktaAuth, authState, startDate}) => {
   const [monthCount, setMonthCount] = useState(0)
   const [currentCalanderDate, setCurrentCalanderDate] = useState()
 
-  
   const URL = process.env.REACT_APP_API_ENDPOINT
-  const userEmail = 'johnybravo@t-mobile.com'
+  // const userEmail = 'johnybravo@t-mobile.com'
 
   useEffect(() => {
   // console.log(new Date('2022-01-03T05:00:00.000+00:00'))
@@ -36,9 +35,8 @@ export default withOktaAuth(({oktaAuth, authState, startDate}) => {
     })
     */
 
-    setData(dummyData)
-    // setSavedUserDates(new Set(dummyData.user.daysInOffice) )
-    // setSavedTeamData(dummyData.teamMembers) 
+    setSavedUserDates(new Set(dummyData.user.daysInOffice) )
+    setSavedTeamData(dummyData.teamMembers) 
   };
   getNamesData()
 
@@ -55,16 +53,6 @@ export default withOktaAuth(({oktaAuth, authState, startDate}) => {
   async function login() {
     await oktaAuth.signInWithRedirect();
   }
-  
-  async function logout() {
-      await oktaAuth.signOut();
-  }
-
-  const sortData = () =>{
-
-  }
-
- 
     
   return (
     <div className='app'>
