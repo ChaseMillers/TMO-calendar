@@ -2,7 +2,7 @@ import React from 'react';
 import { LoginCallback, Security } from "@okta/okta-react";
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import { BrowserRouter, Route } from 'react-router-dom';
-import Home from './components/OktaIntegration/AuthCheck';
+import WithOktaAuth from './components/OktaIntegration/AuthCheck';
 import { withRouter } from 'react-router-dom';
 import './App.css'
 
@@ -19,7 +19,7 @@ function App({ history }) {
 
   return (
     <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
-      <Route path="/" exact={true} component={Home}/>
+      <Route path="/" exact={true} component={WithOktaAuth}/>
       <Route path="/login/callback" component={LoginCallback}/>
     </Security>
   );

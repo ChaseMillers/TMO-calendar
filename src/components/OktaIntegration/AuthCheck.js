@@ -2,14 +2,10 @@
 import CompleteCalendar from '../CompleteCalendar/CompleteCalendar'
 import { withOktaAuth } from "@okta/okta-react";
 
-export default withOktaAuth(({oktaAuth, authState, startDate}) => {
+export default withOktaAuth(({oktaAuth, authState }) => {
 
   if(!authState?.isAuthenticated) {
-    login();
-  }
-
-  async function login() {
-    await oktaAuth.signInWithRedirect();
+    oktaAuth.signInWithRedirect();
   }
     
   return (

@@ -6,6 +6,7 @@ import moment from 'moment';
 import './DefaultCalendar.css'
 import './AddedCalendar.css'
 import dummyData from '../../dummyData.json'
+import Profile from '../OktaIntegration/Profile';
 
 const CompleteCalendar = ({startDate}) =>{
 
@@ -111,6 +112,7 @@ const CompleteCalendar = ({startDate}) =>{
         <div className='app'>
             <div className='absolute-container'>
                 <h1 className='text-center'>In Office Planner</h1>
+                <Profile />
                 <div className='joined-calendar'>
                     <Calendar 
                         defaultActiveStartDate={startDate}
