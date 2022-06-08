@@ -1,11 +1,10 @@
 import React from 'react';
 import { LoginCallback, Security } from "@okta/okta-react";
-import './App.css'
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import { BrowserRouter, Route } from 'react-router-dom';
-import Home from './components/Home';
+import Home from './components/OktaIntegration/AuthCheck';
 import { withRouter } from 'react-router-dom';
-
+import './App.css'
 
 const oktaAuth = new OktaAuth({
   issuer: process.env.REACT_APP_OKTA_ISSUER,

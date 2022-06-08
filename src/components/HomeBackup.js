@@ -41,23 +41,17 @@ export default withOktaAuth(({oktaAuth, authState, startDate}) => {
 
   }, [URL, currentCalanderDate]);
 
-  // if(!authState?.isAuthenticated) {
-  //   login();
-  // }
+  if(!authState?.isAuthenticated) {
+    login();
+  }
 
-  // if(!authState?.isAuthenticated) {
-  //   oktaAuth.signInWithRedirect();
-  // }
+  if(!authState?.isAuthenticated) {
+    oktaAuth.signInWithRedirect();
+  }
 
   async function login() {
     await oktaAuth.signInWithRedirect();
   }
-  
-  async function logout() {
-      await oktaAuth.signOut();
-  }
-
- 
     
   return (
     <div className='app'>

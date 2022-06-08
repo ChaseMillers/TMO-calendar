@@ -1,26 +1,48 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import SidePanelGui from '../SidePannelGui/SidePanelGui';
 import TeamMembersListGui from '../TeamGui/TeamMembersListGui';
 import moment from 'moment';
-
 import './DefaultCalendar.css'
 import './AddedCalendar.css'
+import dummyData from '../../dummyData.json'
 
-const CompleteCalendar = ({
-    date, 
-    savedTeamData,
-    selectedDates,
-    setSavedUserDates,
-    savedUserDates,
-    setSavedTeamData,
-    setDate,
-    startDate,
-    setMonthCount,
-    monthCount,
-    currentCalanderDate,
-    setCurrentCalanderDate
-}) =>{
+const CompleteCalendar = ({startDate}) =>{
+
+    // const {data, setData } = useState({})
+    const [date, setDate] = useState(new Date());
+    const [selectedDates] = useState(new Set())
+    const [savedUserDates, setSavedUserDates] = useState()
+    const [savedTeamData, setSavedTeamData] = useState()
+    const [monthCount, setMonthCount] = useState(0)
+    const [currentCalanderDate, setCurrentCalanderDate] = useState()
+
+    const URL = process.env.REACT_APP_API_ENDPOINT
+    // const userEmail = 'johnybravo@t-mobile.com'
+
+    useEffect(() => {
+        // console.log(new Date('2022-01-03T05:00:00.000+00:00'))
+        
+        // const getURL = URL+moment(currentCalanderDate).format("YYYY/MM/")
+        const getNamesData = () => {
+            /*
+            axios.get(URL).then(response => {
+            // setData(response.data);
+            // convert stored days array into hash set 0(1), use set.has to avoid looping.
+            setSavedUserDates(new Set(response.data.user.daysInOffice))
+            setSavedTeamData(response.data.teamMembers) 
+            })
+            .catch(error => {
+            console.log(error);
+            })
+            */
+        
+            setSavedUserDates(new Set(dummyData.user.daysInOffice) )
+            setSavedTeamData(dummyData.teamMembers) 
+        };
+        getNamesData()
+        
+    }, [URL, currentCalanderDate]);
 
     const handleClass = ({ date, view }) => {
         const fixedFormatCurrentDay = moment(date).format("YYYY/MM/DD")
@@ -86,26 +108,31 @@ const CompleteCalendar = ({
 
 
     return(
-        <div className='joined-calendar'>
-            <Calendar 
-                defaultActiveStartDate={startDate}
-                onChange={handleSelect} 
-                value={date} 
-                tileClassName = {handleClass}
-                tileContent = {({ date }) => <TeamMembersListGui date={date} savedTeamData={savedTeamData} />}
-                tileDisabled={({ date }) => date.getDay() === 0 || date.getDay() === 6 }
-                view={"month"}
+        <div className='app'>
+            <div className='absolute-container'>
+                <h1 className='text-center'>In Office Planner</h1>
+                <div className='joined-calendar'>
+                    <Calendar 
+                        defaultActiveStartDate={startDate}
+                        onChange={handleSelect} 
+                        value={date} 
+                        tileClassName = {handleClass}
+                        tileContent = {({ date }) => <TeamMembersListGui date={date} savedTeamData={savedTeamData} />}
+                        tileDisabled={({ date }) => date.getDay() === 0 || date.getDay() === 6 }
+                        view={"month"}
 
-                nextLabel={<NextIcon />}
-                prevLabel={<PreviousIcon  />}
-            />
-            <SidePanelGui 
-                selectedDates={selectedDates} 
-                savedUserDates={savedUserDates} 
-                setSavedUserDates={setSavedUserDates} 
-                savedTeamData={savedTeamData} 
-                setSavedTeamData={setSavedTeamData} 
-            />
+                        nextLabel={<NextIcon />}
+                        prevLabel={<PreviousIcon  />}
+                    />
+                    <SidePanelGui 
+                        selectedDates={selectedDates} 
+                        savedUserDates={savedUserDates} 
+                        setSavedUserDates={setSavedUserDates} 
+                        savedTeamData={savedTeamData} 
+                        setSavedTeamData={setSavedTeamData} 
+                    />
+                </div>
+            </div>
         </div>
     )
 }
