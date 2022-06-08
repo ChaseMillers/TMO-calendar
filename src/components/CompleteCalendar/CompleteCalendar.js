@@ -77,8 +77,6 @@ const CompleteCalendar = ({startDate}) =>{
         };
       };
 
-
-
     const PreviousIcon =()=>{
         const handlePrevMonth =()=>{
             const newCount = monthCount - 1

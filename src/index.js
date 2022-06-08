@@ -4,10 +4,6 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import RouterApp from './App';
 
-import { withRouter } from 'react-router-dom';
-import { Router } from 'react-router-dom';
-import RouterApp from './App';
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 
