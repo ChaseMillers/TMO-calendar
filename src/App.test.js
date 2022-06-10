@@ -1,9 +1,12 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import CompleteCalendar from './components/CompleteCalendar/CompleteCalendar.js'
+import { UserContextProvider } from './userContext';
 
 test('The Calendar loads every day of the week', () => {
   render(
-    <CompleteCalendar />
+    <UserContextProvider>
+      <CompleteCalendar />
+    </UserContextProvider>
   );
   const calendarElementMon = screen.getByText("Mon");
   expect(calendarElementMon).toBeInTheDocument();
@@ -12,7 +15,9 @@ test('The Calendar loads every day of the week', () => {
 });
 test('The add and remove buttons are rendered', () => {
   render(
-    <CompleteCalendar />
+    <UserContextProvider>
+      <CompleteCalendar />
+    </UserContextProvider>
   );
   const addBtn = screen.getByRole('button', {name :'Add'});
   expect(addBtn).toBeInTheDocument();
@@ -21,7 +26,9 @@ test('The add and remove buttons are rendered', () => {
 });
 test('The Key Color component is rendered', () => {
   render(
-    <CompleteCalendar />
+    <UserContextProvider>
+      <CompleteCalendar />
+    </UserContextProvider>
   );
   const keyColor = screen.getByText("Color Key");
   expect(keyColor).toBeInTheDocument();
@@ -29,7 +36,9 @@ test('The Key Color component is rendered', () => {
 
 test('User can toggle selected days.', () => {
   render(
-    <CompleteCalendar />
+    <UserContextProvider>
+      <CompleteCalendar />
+    </UserContextProvider>
   );
 
   // Select the 10th of the current month.
@@ -46,7 +55,9 @@ test('User can toggle selected days.', () => {
 test('User can see team selected days.', async () => {
   const mockedDate = new Date('Mon Jun 06 2022 10:48:19 GMT-0700 (Pacific Daylight Time)') // The calandar will always be set to this time so test never fails
   render(
-    <CompleteCalendar mockedDate={mockedDate}/>
+    <UserContextProvider>
+      <CompleteCalendar mockedDate={mockedDate}/>
+    </UserContextProvider>
   );
 
   // Mock jest triggered get for us.
@@ -59,7 +70,9 @@ test('User can see team selected days.', async () => {
 test(`If the user hasn't selected a day, when clicking add button, user will get a 'please select a day' pop up mesage`, async () => {
   const alertMock = jest.spyOn(window,'alert').mockImplementation(); 
   render(
-    <CompleteCalendar />
+    <UserContextProvider>
+      <CompleteCalendar />
+    </UserContextProvider>
   );
 
   const addBtn = screen.getByRole('button', {name :'Add'});

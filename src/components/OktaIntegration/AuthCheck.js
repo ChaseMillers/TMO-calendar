@@ -3,6 +3,7 @@ import CompleteCalendar from '../CompleteCalendar/CompleteCalendar'
 import { withOktaAuth } from "@okta/okta-react";
 import Profile from './Profile'
 import React from 'react';
+import { UserContextProvider } from '../../userContext';
 
 export default withOktaAuth(({oktaAuth, authState }) => {
 
@@ -11,10 +12,10 @@ export default withOktaAuth(({oktaAuth, authState }) => {
   }
     
   return (
-    <React.Fragment>
+    <UserContextProvider>
       <Profile />
       <CompleteCalendar />
-    </React.Fragment>
+    </UserContextProvider>
   );
 
 });

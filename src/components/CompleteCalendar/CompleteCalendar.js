@@ -1,72 +1,78 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../../userContext';
 import Calendar from 'react-calendar';
 import SidePanelGui from '../SidePannelGui/SidePanelGui';
 import TeamMembersListGui from '../TeamGui/TeamMembersListGui';
 import moment from 'moment';
 import './DefaultCalendar.css'
 import './AddedCalendar.css'
-import dummyData from '../../dummyData.json'
+import dummyData from '../../NewdummyData.json'
+import axios from 'axios';
 
 const CompleteCalendar = ({startDate}) =>{
 
-    // const {data, setData } = useState({})
     const [date, setDate] = useState(new Date());
     const [selectedDates] = useState(new Set())
     const [savedUserDates, setSavedUserDates] = useState()
     const [savedTeamData, setSavedTeamData] = useState()
     const [monthCount, setMonthCount] = useState(0)
     const [currentCalanderDate, setCurrentCalanderDate] = useState()
+    const [userInfo] = useContext(UserContext) // state context is held in 'OktaIntefration/Profile'
 
-    const URL = process.env.REACT_APP_API_ENDPOINT
-    // const userEmail = 'johnybravo@t-mobile.com'
+    const URL = process.env.REACT_APP_API_ENDPOINT 
+    const localURL = 'http://localhost:8080/api/schedule'
+    const userEmail = userInfo['preferred_username'];
+    const TOKEN = userInfo && userInfo.token
 
     useEffect(() => {
-        // console.log(new Date('2022-01-03T05:00:00.000+00:00'))
         
-        // const getURL = URL+moment(currentCalanderDate).format("YYYY/MM/")
-        const getNamesData = () => {
-            /*
-            axios.get(URL).then(response => {
-            // setData(response.data);
-            // convert stored days array into hash set 0(1), use set.has to avoid looping.
-            setSavedUserDates(new Set(response.data.user.daysInOffice))
-            setSavedTeamData(response.data.teamMembers) 
-            })
-            .catch(error => {
-            console.log(error);
-            })
-            */
-        
-            setSavedUserDates(new Set(dummyData.user.daysInOffice) )
-            setSavedTeamData(dummyData.teamMembers) 
+        const getURL = URL+moment(currentCalanderDate).format("YYYY/MM/")
+        console.log(getURL)
+        const getNamesData = () =>  {
+            if((typeof TOKEN === 'string')){
+                axios.defaults.headers.common = {'Authorization': `bearer ${TOKEN}`}
+                axios.get(getURL).then(response => {
+                    setSavedUserDates(response.data)
+                    setSavedTeamData(response.data) 
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+            }
+           
         };
         getNamesData()
+        // setSavedUserDates(dummyData)
+        // setSavedTeamData(dummyData) 
         
-    }, [URL, currentCalanderDate]);
+    }, [URL, currentCalanderDate, userInfo]);
 
     const handleClass = ({ date, view }) => {
-        const fixedFormatCurrentDay = moment(date).format("YYYY/MM/DD")
-        
+        const fixedFormatCurrentDay = moment(date).format("MM/DD/YYYY")
+    
         return(
-            selectedDates && savedUserDates // If data is part of user selection and saved selection, add both needed classes.
-            && selectedDates.has(fixedFormatCurrentDay) 
-            && savedUserDates.has(fixedFormatCurrentDay)
-            
-            ? 'react-calendar__tile-special selectedInOffice'
-            : selectedDates && selectedDates.has(fixedFormatCurrentDay)
-            
+            fixedFormatCurrentDay &&
+            savedUserDates && 
+            savedUserDates[fixedFormatCurrentDay] 
+            ? savedUserDates[fixedFormatCurrentDay].map(user => ( // If there are saved user dates, loop through them.
+                user.email === userEmail && 
+                selectedDates.has(fixedFormatCurrentDay) 
+                && savedUserDates[fixedFormatCurrentDay]
+                ? 'react-calendar__tile-special selectedInOffice'
+                : user.email === userEmail 
+                ? 'selectedInOffice'
+                : null))
+            : selectedDates && selectedDates.has(fixedFormatCurrentDay) // After the loop, handle selected dates from current session.
             ? 'react-calendar__tile-special'
-            : savedUserDates && savedUserDates.has(fixedFormatCurrentDay)
-            
-            ? 'selectedInOffice'
             : null
+       
         );
     };
 
     const handleSelect =(e)=>{
         setDate(new Date(e))
        
-        const fixedDate = moment(new Date(e)).format("YYYY/MM/DD")
+        const fixedDate = moment(new Date(e)).format("MM/DD/YYYY")
         
         if(selectedDates.has(fixedDate) === false){
           selectedDates.add(fixedDate) 
@@ -74,7 +80,7 @@ const CompleteCalendar = ({startDate}) =>{
         else{
           selectedDates.delete(fixedDate)
         };
-      };
+    };
 
     const PreviousIcon =()=>{
         const handlePrevMonth =()=>{
@@ -115,7 +121,7 @@ const CompleteCalendar = ({startDate}) =>{
                         onChange={handleSelect} 
                         value={date} 
                         tileClassName = {handleClass}
-                        tileContent = {({ date }) => <TeamMembersListGui date={date} savedTeamData={savedTeamData} />}
+                        tileContent = {({ date }) => savedTeamData && <TeamMembersListGui date={date} savedTeamData={savedTeamData} />}
                         tileDisabled={({ date }) => date.getDay() === 0 || date.getDay() === 6 }
                         view={"month"}
 

@@ -19,7 +19,6 @@ const mockResponse = {
                 {"day": "06/16/2022", "members": [ "Boby Jankens", "Chase Miller", "James Franko", "Pete Skims", "Skipy Meeps", "Tim Radke", "Paul Bucker" ]}
             ]
         }
-        
 }
 
 export default {
