@@ -74,10 +74,16 @@ button.react-calendar__navigation__arrow.react-calendar__navigation__prev-button
 
 button.react-calendar__navigation__label{
     margin-top: 23px;
+    pointer-events: none;
 }
 
 /* weekend days */
 .react-calendar__month-view__days__day--weekend {
     color: rgb(201, 201, 201);
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+    color: #757575;
+    pointer-events: none;
 }
 

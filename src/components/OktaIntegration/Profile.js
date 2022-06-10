@@ -1,5 +1,5 @@
 import { useOktaAuth } from '@okta/okta-react';
-import React, { useEffect, useState, useContext  } from 'react';
+import React, { useEffect, useContext  } from 'react';
 import { UserContext } from '../../userContext';
 
 export default function Profile() {
@@ -21,7 +21,7 @@ export default function Profile() {
                 );
             });
         }
-    }, [authState, oktaAuth]);
+    }, [authState, oktaAuth, setUserInfo]);
 
     // setFinalToken(authState)
 

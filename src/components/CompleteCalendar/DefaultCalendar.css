@@ -66,9 +66,6 @@
     font-weight: bold;
   }
  
-  .react-calendar__month-view__days__day--neighboringMonth {
-    color: #757575;
-  }
   .react-calendar__year-view .react-calendar__tile,
   .react-calendar__decade-view .react-calendar__tile,
   .react-calendar__century-view .react-calendar__tile {
@@ -101,4 +98,4 @@
     background-color: #e6e6e6;
   }
   
- 
+  

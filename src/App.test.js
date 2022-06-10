@@ -46,40 +46,25 @@ test('User can toggle selected days.', () => {
   fireEvent.click(dateTile)
 
   // Check if date tile is selected with correct selection class.
-  expect(dateTile.className).toBe('react-calendar__tile react-calendar__tile--active react-calendar__tile--range react-calendar__tile--rangeStart react-calendar__tile--rangeEnd react-calendar__tile--rangeBothEnds react-calendar__month-view__days__day react-calendar__tile-special')
+  expect(dateTile.className).toBe("react-calendar__tile react-calendar__tile--now react-calendar__tile--active react-calendar__tile--range react-calendar__tile--rangeStart react-calendar__tile--rangeEnd react-calendar__tile--rangeBothEnds react-calendar__month-view__days__day react-calendar__tile-special")
 
   fireEvent.click(dateTile) // Check that the same tile had been toggled off.
-  expect(dateTile.className).toBe('react-calendar__tile react-calendar__tile--active react-calendar__tile--range react-calendar__tile--rangeStart react-calendar__tile--rangeEnd react-calendar__tile--rangeBothEnds react-calendar__month-view__days__day')
+  expect(dateTile.className).toBe("react-calendar__tile react-calendar__tile--now react-calendar__tile--active react-calendar__tile--range react-calendar__tile--rangeStart react-calendar__tile--rangeEnd react-calendar__tile--rangeBothEnds react-calendar__month-view__days__day")
 });
 
 test('User can see team selected days.', async () => {
   const mockedDate = new Date('Mon Jun 06 2022 10:48:19 GMT-0700 (Pacific Daylight Time)') // The calandar will always be set to this time so test never fails
   render(
     <UserContextProvider>
-      <CompleteCalendar mockedDate={mockedDate}/>
+      <CompleteCalendar mockedDate={mockedDate} MOCK={true}/>
     </UserContextProvider>
   );
 
-  // Mock jest triggered get for us.
-  // Button content 'name' will hold the team users ID
-  const teamMemberIcon = await screen.findByRole('button', {name :/cmiller200@t-mobile.com/i})
-  
-  expect(teamMemberIcon).toBeInTheDocument();
+  // expect multiple team members to be on page.
+  const teamMembers = await screen.findAllByTestId('team-mate')
+  expect(teamMembers[0]).toBeInTheDocument();
+
 });
-
-test(`If the user hasn't selected a day, when clicking add button, user will get a 'please select a day' pop up mesage`, async () => {
-  const alertMock = jest.spyOn(window,'alert').mockImplementation(); 
-  render(
-    <UserContextProvider>
-      <CompleteCalendar />
-    </UserContextProvider>
-  );
-
-  const addBtn = screen.getByRole('button', {name :'Add'});
-  fireEvent.click(addBtn)
-   expect(alertMock).toHaveBeenCalledTimes(1)
-});
-
 
 // Use screen.debug() when needed
 // Great video on aysnc mocking https://www.youtube.com/watch?v=TBZy-Rc-xX0

@@ -6,10 +6,9 @@ import TeamMembersListGui from '../TeamGui/TeamMembersListGui';
 import moment from 'moment';
 import './DefaultCalendar.css'
 import './AddedCalendar.css'
-import dummyData from '../../NewdummyData.json'
 import axios from 'axios';
 
-const CompleteCalendar = ({startDate}) =>{
+const CompleteCalendar = ({startDate, MOCK}) =>{
 
     const [date, setDate] = useState(new Date());
     const [selectedDates] = useState(new Set())
@@ -18,16 +17,13 @@ const CompleteCalendar = ({startDate}) =>{
     const [monthCount, setMonthCount] = useState(0)
     const [currentCalanderDate, setCurrentCalanderDate] = useState()
     const [userInfo] = useContext(UserContext) // state context is held in 'OktaIntefration/Profile'
-
+    const [trigger, setTrigger] = useState(false)
     const URL = process.env.REACT_APP_API_ENDPOINT 
-    const localURL = 'http://localhost:8080/api/schedule'
     const userEmail = userInfo['preferred_username'];
     const TOKEN = userInfo && userInfo.token
 
     useEffect(() => {
-        
         const getURL = URL+moment(currentCalanderDate).format("YYYY/MM/")
-        console.log(getURL)
         const getNamesData = () =>  {
             if((typeof TOKEN === 'string')){
                 axios.defaults.headers.common = {'Authorization': `bearer ${TOKEN}`}
@@ -39,13 +35,17 @@ const CompleteCalendar = ({startDate}) =>{
                     console.log(error);
                 })
             }
+            else if (MOCK){
+                axios.get('').then(response => {
+                    setSavedUserDates(response.data)
+                    setSavedTeamData(response.data) 
+                })
+            }
            
         };
         getNamesData()
-        // setSavedUserDates(dummyData)
-        // setSavedTeamData(dummyData) 
         
-    }, [URL, currentCalanderDate, userInfo]);
+    }, [URL, currentCalanderDate, userInfo, trigger, MOCK, TOKEN]);
 
     const handleClass = ({ date, view }) => {
         const fixedFormatCurrentDay = moment(date).format("MM/DD/YYYY")
@@ -61,7 +61,10 @@ const CompleteCalendar = ({startDate}) =>{
                 ? 'react-calendar__tile-special selectedInOffice'
                 : user.email === userEmail 
                 ? 'selectedInOffice'
-                : null))
+                : selectedDates && selectedDates.has(fixedFormatCurrentDay)
+                ?  'react-calendar__tile-special'
+                : null
+                ))
             : selectedDates && selectedDates.has(fixedFormatCurrentDay) // After the loop, handle selected dates from current session.
             ? 'react-calendar__tile-special'
             : null
@@ -127,6 +130,7 @@ const CompleteCalendar = ({startDate}) =>{
 
                         nextLabel={<NextIcon />}
                         prevLabel={<PreviousIcon  />}
+                        // showNeighboringMonth={false}
                     />
                     <SidePanelGui 
                         selectedDates={selectedDates} 
@@ -134,6 +138,12 @@ const CompleteCalendar = ({startDate}) =>{
                         setSavedUserDates={setSavedUserDates} 
                         savedTeamData={savedTeamData} 
                         setSavedTeamData={setSavedTeamData} 
+                        date={date}
+                        userEmail={userEmail}
+                        TOKEN={TOKEN}
+                        URL={URL}
+                        setTrigger={setTrigger}
+                        trigger={trigger}
                     />
                 </div>
             </div>

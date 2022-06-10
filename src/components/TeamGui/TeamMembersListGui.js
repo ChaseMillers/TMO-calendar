@@ -7,7 +7,6 @@ const TeamMembersListGui = ({ date, savedTeamData }) => {
   const [userInfo] = useContext(UserContext) // state context is held in 'OktaIntefration/Profile'
   const userEmail = userInfo['preferred_username'];
   const fixedFormatCurrentDay = moment(date).format("MM/DD/YYYY")
-  let count = null
 
   const TeemLoop =()=> (
     fixedFormatCurrentDay && 
@@ -38,7 +37,7 @@ const TeamMembersListGui = ({ date, savedTeamData }) => {
           savedTeamData[fixedFormatCurrentDay] &&
           savedTeamData[fixedFormatCurrentDay].map((user, i) => (
             user.email !== userEmail 
-            ? <div className='team-selected' key={i}>{savedTeamData[fixedFormatCurrentDay].length}</div>
+            ? <div data-testid="team-mate" className='team-selected' key={i}>{savedTeamData[fixedFormatCurrentDay].length}</div>
             : user.email !== userEmail && savedTeamData[fixedFormatCurrentDay].length -1 === 0
             ? null
             : savedTeamData[fixedFormatCurrentDay].length -1
