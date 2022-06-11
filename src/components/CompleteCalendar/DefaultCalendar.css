@@ -98,4 +98,9 @@
     background-color: #e6e6e6;
   }
   
-  
+ .user-info {
+    background-color: rgb(231, 82, 171);
+    max-width: 300px;
+    color: white;
+ }
+

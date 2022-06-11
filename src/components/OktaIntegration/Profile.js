@@ -34,10 +34,10 @@ export default function Profile() {
     }
     console.log(authState.accessToken.accessToken);
     return (
-        <div>
+        <div className='user-info'>
             <p>Logged in as {userInfo && userInfo['name']} 
-            with email {userInfo && userInfo['preferred_username']}</p>
-            <p>{userInfo && userInfo['email']}</p>
+            <br/>
+            Email: {userInfo && userInfo['preferred_username']}</p>
         </div>
     );
 }
